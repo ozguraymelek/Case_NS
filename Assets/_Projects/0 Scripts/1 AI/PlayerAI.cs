@@ -59,7 +59,8 @@ public class PlayerAI : MonoBehaviour, ICanResponse
         
         if (hit.collider.TryGetComponent(out Player player) == true)
         {
-            player.Response(rb);
+            player.Response(hit.rigidbody);
+            ResponsewPlayer(rb);
             ScoreManager.Instance.lastCollidedAI = this;
         }
     }
@@ -76,7 +77,15 @@ public class PlayerAI : MonoBehaviour, ICanResponse
         AnimationManager.Request(animator, Options.Bool, "IsHitted", true);
         AnimationManager.Request(collidedRb.transform.GetComponent<PlayerAI>().animator, Options.Bool, "IsHitted", true);
     }
-
+    
+    public void ResponsewPlayer(Rigidbody collidedRb)
+    {
+        var force = new Vector3(0f, 0f, 100f);
+        collidedRb.AddRelativeForce(force, ForceMode.Impulse);
+        
+        AnimationManager.Request(animator, Options.Bool, "IsHitted", true);
+    }
+    
     #endregion
 
     #region Priv Funcs
