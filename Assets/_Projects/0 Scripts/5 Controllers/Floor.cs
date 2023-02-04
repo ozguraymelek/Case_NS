@@ -13,6 +13,7 @@ public class Floor : MonoBehaviour
         
             ai.Die();
 
+            GameTimer.Instance.timeIsUp = true;
             ScoreManager.Instance.score += 1;
             ScoreManager.Instance.textScore.text = ScoreManager.Instance.score.ToString();
         }
@@ -22,6 +23,8 @@ public class Floor : MonoBehaviour
             if (ScoreManager.Instance.lastCollidedAI != ai) return;
         
             player.Die();
+            
+            GameTimer.Instance.timeIsUp = true;
             GameManager.Instance.losePanel.SetActive(true);
         }
     }
